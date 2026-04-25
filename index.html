@@ -2,31 +2,48 @@
     <head>
         <title>webdesk very wip pls wait</title>
     </head>
-    <body>
-        <div id="win" style="position:absolute;left:100px;top:100px;width:300px;height:200px;border:2px solid black;background:white;">
-            <div id="bar" style="height:24px;background:#ccc;cursor:move;">some random ahh window</div>
-        </div>
+    <body style="background:#c0c0c0";margin:0">
         <script>
-            let win = document.getElementById('win');
-            let bar = document.getElementById('bar');
-            let drag = false;
-            let ox, oy;
+            function createWindow(title) {
+                let win = document.createElement("div");
+                win.style.position = "absolute";
+                win.style.left = "100px";
+                win.style.top = "100px";
+                win.style.width = "300px";
+                win.style.height = "200px";
+                win.style.bord = "2px solid black";
+                win.style.background = "white";
 
-            bar.onmousedown = function(e) {
-                drag = true;
-                ox = e.clientX - win.offsetLeft;
-                oy = e.clientY - win.offsetTop;
-            };
-            
-            document.onmousemove = function(e) {
-                if (!drag) return;
-                win.style.left = (e.clientX - ox) + 'px';
-                win.style.top = (e.clientY - oy) + 'px';
-            };
+                let bar = document.createElement("div");
+                bar.style.height = "24px";
+                bar.style.background = "#ccc";
+                bar.style.cursor = "move";
+                bar.textContent = title;
 
-            document.onmouseup = function() {
-                drag = false;
-            };
+                win.appendChild(bar);
+                document.body.appendChild(win);
+
+                let drag = false;
+                let ox, oy;
+
+                bar.onmousedown = function (e) {
+                    drag = true;
+                    ox = e.clientX - win.offsetLeft;
+                    oy = e.clientY - win.offsetTop;
+                };
+
+                document.addEventListener("mousemove", function (e) {
+                    if (!drag) return;
+                    win.style.left = e.clientX - ox + "px";
+                    win.style.top = e.clientY - oy + "px";
+                });
+
+                document.addEventListener("mouseup", function () {
+                    drag = false;
+                });
+            }
+
+            createWindow("hey hey test");
         </script>
     </body>
 </html>
