@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>webdesk very wip pls wait</title>
+    </head>
+    <body>
+        <div id="win" style="position:absolute;left:100px;top:100px;width:300px;height:200px;border:2px solid black;background:white;">
+            <div id="bar" style="height:24px;background:#ccc;cursor:move;">some random ahh window</div>
+        </div>
+        <script>
+            let win = document.getElementById('win');
+            let bar = document.getElementById('bar');
+            let drag = false;
+            let ox, oy;
+
+            bar.onmousedown = function(e) {
+                drag = true;
+                ox = e.clientX - win.offsetLeft;
+                oy = e.clientY - win.offsetTop;
+            };
+            
+            document.onmousemove = function(e) {
+                if (!drag) return;
+                win.style.left = (e.clientX - ox) + 'px';
+                win.style.top = (e.clientY - oy) + 'px';
+            };
+
+            document.onmouseup = function() {
+                drag = false;
+            };
+        </script>
+    </body>
+</html>
