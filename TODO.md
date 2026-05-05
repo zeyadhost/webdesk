@@ -4,7 +4,7 @@
 - [x] Draggable placeholder window
 - [x] `createWindow(title)` factory function
 - [x] Desktop background (so window borders are visible)
-- [ ] Window controls (close, minimize and maximize)
+- [x] Window controls (close, minimize and maximize)
 - [ ] Focus & [z-index](https://www.w3schools.com/cssref/pr_pos_z-index.php) (click to bring window in front)
 - [ ] Desktop shell (wallpaper, taskbar, clock)
 - [ ] Start Menu / desktop icons to launch apps

@@ -18,13 +18,49 @@
                 bar.style.height = "24px";
                 bar.style.background = "#ccc";
                 bar.style.cursor = "move";
-                bar.textContent = title;
+                bar.style.display = 'flex';
+                bar.style.justifyContent = "space-between";
+                bar.style.alignItems = "center";
+
+                let name = document.createElement('div');
+                name.textContent = title;
+
+                let controls = document.createElement('div');
+                controls.style.display = 'flex';
+                controls.onmousedown = function(e) {
+                  e.stopPropagation();
+                }
+
+                function button(text) {
+                  let b = document.createElement('button');
+                  b.textContent = text;
+                  b.style.width = '24px';
+                  b.style.height = '22px';
+                  b.style.padding = '0';
+                  return b;
+                }
+
+                let min = button("_");
+                let max = button("□");
+                let close = button('x');
+                controls.appendChild(min);
+                controls.appendChild(max);
+                controls.appendChild(close);
+                bar.appendChild(name);
+                bar.appendChild(controls);
+
+                let body = document.createElement('div');
+                body.style.height = '176px';
 
                 win.appendChild(bar);
+                win.appendChild(body);
                 document.body.appendChild(win);
 
                 let drag = false;
                 let ox, oy;
+                let hidden = false;
+                let full = false;
+                let old;
 
                 bar.onmousedown = function (e) {
                     drag = true;
@@ -37,6 +73,39 @@
                     win.style.left = e.clientX - ox + "px";
                     win.style.top = e.clientY - oy + "px";
                 });
+
+                close.onclick = function() {
+                  win.remove();
+                };
+
+                min.onclick = function() {
+                  hidden = !hidden;
+                  body.style.height = hidden ? 'none' : 'block';
+                  win.style.height = hidden ? '24px' : (full ? (innerHeight - 4) + 'px' : '200px');
+                };
+
+                max.onclick = function() {
+                  if (full) {
+                    win.style.left = old.left;
+                    win.style.top = old.top;
+                    win.style.width = old.width;
+                    win.style.height = hidden ? '24px' : old.height;
+                    full = false;
+                    return;
+                  }
+
+                  old = {
+                    left: win.style.left,
+                    top: win.style.top,
+                    width: win.style.width,
+                    height: win.style.height
+                  };
+                  win.style.left = '0px';
+                  win.style.top = '0px';
+                  win.style.width = (innerWidth - 4) + 'px';
+                  win.style.height = hidden ? '24px' : (innerHeight - 4) + 'px';
+                  full = true;
+                };
 
                 document.addEventListener("mouseup", function () {
                     drag = false;
